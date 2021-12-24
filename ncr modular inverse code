@@ -1,0 +1,64 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef     long long    ll;
+typedef     vector<int> vi;
+typedef     vector<long long> vl;
+typedef     pair<int, int>pi;
+typedef     pair<long long, long long>pl;
+#define F   first
+#define S   second
+#define pb  push_back
+#define     all(x)      x.begin() , x.end()
+#define mp  make_pair
+#define       FOR(i,a,b) for(i=a;i<=b;i++)
+#define     mem(a)      memset(a , 0 ,sizeof a)
+#define     memn(a)     memset(a , -1 ,sizeof a)
+const  ll mod = 1e9;
+const ll  N   = 3e5 + 5;
+ 
+ll fact[N];
+ll  factInv[N];
+ll bigMod(ll base,ll pow)
+{
+    ll a,b;
+    if(pow==0) return 1;
+     if(pow%2==1)
+     {
+      a=base%mod;
+      b=bigMod(base,pow-1)%mod;
+      return (a*b)%mod;
+     }else
+     {
+      a=bigMod(base,pow/2)%mod;
+      return (a*a)%mod;
+     }
+}
+ll ncr(ll n,ll r){
+  if(r>n){
+    return 0;
+  }
+  ll z = (factInv[r]%mod)*(factInv[n-r])%mod;
+  ll x = ((fact[n]%mod)*(z%mod))%mod;
+  return x;
+}
+int main()
+{
+    fact[0] = factInv[0] = 1;
+  for(ll i=1;i<=N;i++)
+  {
+    fact[i] = (fact[i-1]*i)%mod;
+    factInv[i] = bigMod(fact[i],mod-2)%mod;
+  }
+ int t;
+ cin>>t;
+ while(t--)
+ {
+   ll n,i,x,y,z,l,r,mid,ans=0,ans1,m,k,cal,j;
+   cin>>n>>r;
+      cal=ncr(n+r-1,r);
+     ans=((ans%mod)+(cal%mod))%mod;
+     cout<<ans<<endl;
+
+ }
+ return 0;
+}
