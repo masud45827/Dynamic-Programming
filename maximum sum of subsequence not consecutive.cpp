@@ -76,13 +76,18 @@ inline int add(int a, int b, int mod) {a += b ; return a >= mod ? a - mod : a ;}
 inline int sub(int a, int b, int mod) {a -= b ; return a < 0 ? a + mod : a ;}
 inline int mul(int a, int b, int mod) {return (ll)a * b % mod ;}
 ll a[N + 3];
-ll dp[N + 3], n;
-int fun(int i) {
+ll dp[N + 3][2], n;
+ll fun(ll i,ll prev) {
     if (i > n) return 0;
-    if (dp[i] != -1) return dp[i];
-    ll x = a[i] + fun(i + 2);
-    ll y = fun(i + 1);
-    return dp[i]=max(x,y);
+    if (dp[i][prev] != -1) return dp[i][prev];
+    if (prev == 0) {
+        ll x = a[i] + fun(i+1,1);
+        ll y = fun(i + 1,0);
+        return dp[i][prev] = max(x, y);
+    }else{
+         ll x=fun(i+1,0);
+         return dp[i][prev]=x;
+    }
 }
 int main() {
     int test = 1, fac = 1;
@@ -92,7 +97,7 @@ int main() {
         cin >> n;
         memn(dp);
         for (i = 1; i <= n; i++) cin >> a[i];
-        cout << fun(1) << endl;
+        cout << fun(1,0) << endl;
     }
     return 0;
 }
